@@ -1,0 +1,38 @@
+<!DOCTYPE>
+<html>
+	<head>
+		<title> Tictactoe </title>
+       <meta charset="UTF-8">
+        
+    </head>
+<script src="Tictactoe.js"></script>
+<body>
+    <div>
+       
+    <table>
+    <tr>
+     <th><input type="button" id="1" onclick="xoo(1)" value=" - " /> </th>
+     <th><input type="button" id="2" onclick="xoo(2)"value=" - " /> </th>
+     <th><input type="button" id="3" onclick="xoo(3)" value=" - " /> </th>
+    </tr>
+    <tr>
+     <th><input type="button" id="4" onclick="xoo(4)" value=" - " /> </th>
+     <th><input type="button" id="5" onclick="xoo(5)" value=" - " /> </th>
+     <th><input type="button" id="6" onclick="xoo(6)" value=" - " /> </th>
+     </tr>
+    <tr>
+     <th><input type="button" id="7" onclick="xoo(7)" value=" - " /> </th>
+     <th><input type="button" id="8" onclick="xoo(8)" value=" - " /> </th>
+     <th><input type="button" id="9" onclick="xoo(9)" value=" - " /> </th>
+    </tr>
+        </table>
+    </div>
+       <button onclick="showui()">Reset</button>
+       <section id="popup">
+  <p id="text"></p>
+  <button id="popup" onclick="showui()">Ok</button>
+  </section>
+  
+  <section id="overlay"></section>
+</body>
+</html>
