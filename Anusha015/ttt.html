@@ -1,0 +1,152 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <title>Tictactoe</title>
+        <meta charset= "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="ttt.css" rel="stylesheet" type="text/css">
+    </head>
+    <script src ="ttt.js"></script>
+    
+    <script type="text/javascript"
+                src="http://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous">
+     </script>
+        
+    
+    
+<body  onload="getplayer();">
+   
+   <header>
+ <h1>Let's play TicTacToe</h1>
+  </header>
+   
+    <div>
+        <form>
+        <h3>SCORE</h3>
+        <input type="text" placeholder="PlayerA" class="user" id="Playera">
+        <input type="text"  class="score" id="x"/>
+        
+        <br>        
+        <input type="text" placeholder="PlayerB" class="user" id="Playerb">
+        <input type= "text"  class="score" id="o"/>
+        
+        </form>
+        
+        <table class="center">
+            <tr>
+                <th><input type= "button" class ="block" id="1" onclick="xo(1)" value=" "/></th>
+                <th><input type= "button" class = "block" id="2" 
+                onclick="xo(2)" value=" "/></th>
+                <th><input type= "button" class = "block" id="3" onclick="xo(3)" value=" "/></th>
+            </tr>
+            <tr>
+                <th><input type= "button" class ="block" id="4" onclick="xo(4)" value=" "/></th>
+                <th><input type= "button" class ="block" id="5" onclick="xo(5)" value=" "/></th>
+                <th><input type= "button" class ="block" id="6" onclick="xo(6)" value=" "/></th>
+            </tr>
+            <tr>
+                <th><input type= "button" class ="block" id="7" onclick="xo(7)" value=" " /></th>
+                <th><input type= "button" class ="block" id="8" onclick="xo(8)" value=" "/></th>
+                <th><input type= "button" class ="block" id="9" onclick="xo(9)" value=" "/></th>
+            </tr>
+            
+                
+        </table>
+    </div>
+    <br>
+    <button class="rbtn" onclick="reset();">RESET</button>
+    
+    <button class="rbtn" onclick="Updatescore();">SAVE SCORES</button>
+    
+    
+            
+            <script>
+                
+              function getplayer(){
+            var a = localStorage.getItem("Player1");
+            var b = localStorage.getItem("Player2");
+            document.getElementById("Playera").value=a;
+            document.getElementById("Playerb").value=b;
+                   getscore();
+                }
+         
+        function getscore(){
+            var a = localStorage.getItem("Player1");
+            var b = localStorage.getItem("Player2");
+            $.ajax({
+                
+                url:'http://localhost:57574/api/Scoretics/'+a,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(res){
+                    document.getElementById('x').value = res.Score;
+                }
+                
+            });
+            $.ajax({
+                
+                url:'http://localhost:57574/api/Scoretics/'+b,
+                type: 'GET',
+                dataType: 'JSON',
+                success: function(res){
+                    document.getElementById('o').value = res.Score;
+                }
+                
+            });
+        }
+
+              
+        function Updatescore(){
+            
+            
+            var a = localStorage.getItem("Player1");
+            var b = localStorage.getItem("Player2");
+            var scorex=document.getElementById("x").value;
+            var scoreo=document.getElementById("o").value;
+            
+                
+                var dataToSend1={
+                    "Player":a,
+                    "Score": scorex
+                    
+                        }
+                $.ajax({
+                    url:'http://localhost:57574/api/Scoretics/'+a,
+                    type: 'PUT',
+                    data: dataToSend1,
+                    dataType: 'json',
+                    success: function(res){
+                         console.log(dataToSend1);
+                        
+                        alert("Scores Updated");
+                    }
+                });
+            
+            var dataToSend2={
+                    "Player":b,
+                    "Score": scoreo
+                        }
+             
+              $.ajax({
+                    url:'http://localhost:57574/api/Scoretics/'+b,
+                    type: 'PUT',
+                    data: dataToSend2,
+                    dataType: 'json',
+                    success: function(res){
+                         console.log(dataToSend2);
+                        
+                        alert("Scores Updated");
+                    }
+                });
+            
+                
+            }
+        
+       
+        </script>
+    
+</body>    
+           
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+       
+       <title>CreateUser</title>
+        <meta charset= "UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link href="ttt.css" rel="stylesheet" type="text/css">
+                
+    </head>
+        <script
+                src="http://code.jquery.com/jquery-3.3.1.js"
+                integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+                crossorigin="anonymous">
+        </script>
+
+        
+<body onload="loadData()">
+<h1>Let's play TicTacToe</h1>
+
+<div>
+<form>
+   
+     <h5>SELECT THE NAME OF FIRST PLAYER</h5>
+    <select id="playera"></select>
+    
+    <h5>SELECT THE NAME OF SECOND PLAYER</h5>
+    <select id="playerb"></select>
+    
+    <p>OR</p>
+    <input type="text" placeholder="NEW PLAYER" id="player">
+    
+       
+    <button class="rbtn" onclick="createuser()">Create Player</button>
+    
+    
+    </form>   
+
+   <button class="rbtn" onclick="redirect()">Start Game</button>
+   
+    </div>
+   </body>
+        <script>
+
+
+            function createuser(){
+                var player=document.getElementById("player").value;
+                
+                var dataToSend={
+                    "Player": player,
+                    
+                }
+                
+                $.ajax({
+                    url:'http://localhost:57574/api/Scoretics' ,
+                    type: 'POST',
+                    data: dataToSend,
+                    dataType: 'json',
+                    success: function(res){
+                        console.log(res);
+                        alert("PlAYERS CREATED");
+                    }
+                });
+                
+                              
+            }
+            
+            function loadData(){
+                $.ajax({
+                   url:'http://localhost:57574/api/Scoretics',
+                    type:'get',
+                    dataType:'json',
+                    success:function(res){
+                        $.each(res,function(i,item){
+                            $('#playera').append($('<option>', { 
+                                value: item.Player,
+                                text : item.Player 
+                            }));
+                            $('#playerb').append($('<option>', { 
+                                value: item.Player,
+                                text : item.Player 
+                            }));
+                        })
+                    }
+                });
+            }
+
+            function redirect(){
+            
+            localStorage.setItem("Player1",playera.value);
+            localStorage.setItem("Player2",playerb.value);
+                
+            
+                window.location="ttt.html";}
+            
+        </script>
+        
+    
+        
+    
+</html>
